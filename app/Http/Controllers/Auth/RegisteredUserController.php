@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Mail\SendVerificationCode;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -35,16 +37,20 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $code = rand(10000,99999);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'verification_code'=> $code,
         ]);
 
-        event(new Registered($user));
+        Mail::to($user->email)->send(new SendVerificationCode($code));
+
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect('/verify-email');
     }
 }
