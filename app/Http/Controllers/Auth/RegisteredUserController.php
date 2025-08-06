@@ -37,13 +37,14 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $code = rand(10000,99999);
+        $code = str_pad(rand(10000,99999),6,'0',STR_PAD_LEFT);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'verification_code'=> $code,
+            'is_verified' => false,
         ]);
 
         Mail::to($user->email)->send(new SendVerificationCode($code));

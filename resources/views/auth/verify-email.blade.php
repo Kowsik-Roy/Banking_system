@@ -1,4 +1,8 @@
 <x-app-layout>
+    @if (Auth::user()->is_verified)
+        <script>window.location.href = "{{ route('dashboard') }}";</script>
+    @endif
+
     <div class="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
         <h2 class="text-2xl font-bold mb-4 text-center">Email Verification</h2>
 
@@ -24,9 +28,13 @@
                 @csrf
 
                 <label for="code" class="block mb-2 text-sm font-medium text-gray-700">Verification Code</label>
-                <input type="text" name="code" maxlength="6" required
-                       class="w-full px-4 py-2 border border-gray-300 rounded-md mb-4 focus:ring-blue-500">
-
+                <input type="text" name="code" maxlength="6" 
+                       class="w-full px-4 py-2 border border-gray-300 rounded-md mb-4 focus:ring-blue-500"
+                        placeholder="Enter 6 digit code" required>
+                
+                @error('code')
+                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                @enderror
                 <button type="submit"
                         class="w-full bg-indigo-600 text-black py-2 rounded hover:bg-indigo-700 transition">
                     Verify
