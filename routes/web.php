@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\TransferController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +20,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth','verified'])->group(function () {
+    Route::get('/transfer', [TransferController::class, 'showForm'])->name('transfer.create');
+    Route::post('/transfer', [TransferController::class, 'transfer'])->name('transfer.store');
+});
+
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/set-pin', [UserController::class, 'showPinForm'])->name('user.setPin');
@@ -29,5 +36,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/verify-email', [EmailVerificationController::class, 'showForm'])->name('verify.email.form');
     Route::post('/verify-email', [EmailVerificationController::class, 'verifycode'])->name('verify.email.code');
 });
+
 
 require __DIR__.'/auth.php';

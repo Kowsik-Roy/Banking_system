@@ -40,7 +40,10 @@
                         
                         <x-dropdown-link :href="route('user.setPin')">
                         {{ __('Set PIN') }}
-                        </x-dropdown-link>                        
+                        </x-dropdown-link>  
+                        <x-dropdown-link :href="route('transfer.create')">
+                            {{ __('Transfer Money') }}
+                        </x-dropdown-link>                      
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
@@ -91,6 +94,11 @@
                 <x-responsive-nav-link :href="route('user.setPin')">
                     {{ __('Set PIN') }}
                 </x-responsive-nav-link>
+                
+                <x-responsive-nav-link :href="route('transfer.create')">
+                    {{ __('Transfer Money') }}
+                </x-responsive-nav-link>
+
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
