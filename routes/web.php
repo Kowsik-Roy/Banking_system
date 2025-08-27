@@ -8,6 +8,9 @@ use App\Http\Controllers\TransferController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\AdminSupportController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,6 +26,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/deposit/{userId}', [AdminController::class, 'deposit'])->name('admin.deposit');
     Route::get('/admin/withdraw/{userId}', [AdminController::class, 'showWithdrawForm'])->name('admin.withdraw.form');
     Route::post('/admin/withdraw/{userId}', [AdminController::class, 'withdraw'])->name('admin.withdraw');
+    
+    // Admin Support Routes
+    Route::get('/admin/support', [AdminSupportController::class, 'index'])->name('admin.support.index');
+    Route::get('/admin/support/{conversation}', [AdminSupportController::class, 'show'])->name('admin.support.show');
+    Route::post('/admin/support/{conversation}/messages', [AdminSupportController::class, 'sendMessage'])->name('admin.support.send-message');
+    Route::put('/admin/support/{conversation}/close', [AdminSupportController::class, 'closeConversation'])->name('admin.support.close');
+    Route::get('/admin/support/{conversation}/messages', [AdminSupportController::class, 'getMessages'])->name('admin.support.messages');
 });
 
 Route::middleware('auth')->group(function () {
@@ -41,6 +51,16 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
     Route::get('/transactions/download', [TransactionController::class, 'download'])->name('transactions.download');
     Route::get('/transactions/{id}', [TransactionController::class, 'show'])->name('transactions.show');
+});
+
+// Support Chat Routes - Only require authentication, not verification
+Route::middleware(['auth'])->group(function () {
+    Route::get('/support', [ConversationController::class, 'index'])->name('conversations.index');
+    Route::post('/support', [ConversationController::class, 'store'])->name('conversations.store');
+    Route::get('/support/{conversation}', [ConversationController::class, 'show'])->name('conversations.show');
+    Route::put('/support/{conversation}/close', [ConversationController::class, 'close'])->name('conversations.close');
+    Route::get('/support/{conversation}/messages', [MessageController::class, 'index'])->name('messages.index');
+    Route::post('/support/{conversation}/messages', [MessageController::class, 'store'])->name('messages.store');
 });
 
 Route::middleware(['auth'])->group(function () {
