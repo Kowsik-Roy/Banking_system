@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            if (!Schema::hasColumn('users', 'is_verified')) {
-                $table->boolean('is_verified')->default(false);
-            }
+            $table->string('role')->default('user');
+
         });
     }
 
@@ -24,9 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            if (Schema::hasColumn('users', 'is_verified')) {
-                $table->dropColumn('is_verified');
-            }
+            $table->dropColumn('role');
         });
     }
 };

@@ -1,3 +1,280 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom styles to fix overlay issues */
+body {
+    position: relative;
+    z-index: 1;
+}
+
+/* Ensure forms are clickable and not blocked */
+form {
+    position: relative;
+    z-index: 10;
+}
+
+input, button, select, textarea {
+    position: relative;
+    z-index: 15;
+}
+
+/* Fix any potential overlay issues */
+.relative {
+    position: relative;
+}
+
+/* Ensure proper stacking context */
+.min-h-screen {
+    position: relative;
+    z-index: 1;
+}
+
+/* Fix button styling */
+.inline-flex {
+    display: inline-flex;
+}
+
+/* Ensure form inputs are properly styled */
+input[type="email"],
+input[type="password"],
+input[type="text"],
+input[type="tel"] {
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Fix button styling - specifically for login/register forms */
+button[type="submit"] {
+    background-color: #2563eb !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 0.375rem !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: background-color 0.15s ease-in-out !important;
+    display: block !important;
+    width: 100% !important;
+    margin-top: 1rem !important;
+}
+
+button[type="submit"]:hover {
+    background-color: #1d4ed8 !important;
+}
+
+button[type="submit"]:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Additional fixes for overlay issues */
+.w-full.sm\:max-w-md {
+    position: relative;
+    z-index: 20;
+}
+
+/* Ensure form container is above any potential overlays */
+.bg-white.shadow-md {
+    position: relative;
+    z-index: 25;
+}
+
+/* Fix any potential pointer-events issues */
+input, button, select, textarea, label {
+    pointer-events: auto !important;
+}
+
+/* Ensure mobile navigation menu is properly positioned */
+@media (max-width: 640px) {
+    .sm\:hidden {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border-top: 1px solid #e5e7eb;
+        z-index: 40;
+        display: none; /* Ensure it's hidden by default */
+    }
+    
+    /* Only show when Alpine.js x-show="open" is true */
+    .sm\:hidden[x-cloak] {
+        display: none !important;
+    }
+}
+
+/* Ensure main content has proper spacing from fixed navigation */
+main {
+    padding-top: 4rem; /* 64px to account for fixed navigation */
+}
+
+/* Alpine.js x-cloak directive */
+[x-cloak] {
+    display: none !important;
+}
+
+/* Ensure withdraw modal is hidden by default */
+#withdrawModal {
+    display: none !important;
+}
+
+#withdrawModal.show {
+    display: block !important;
+}
+
+/* Force mobile navigation to be hidden by default */
+nav .sm\:hidden {
+    display: none !important;
+}
+
+/* Only show mobile navigation when Alpine.js explicitly shows it */
+nav .sm\:hidden[x-show="true"] {
+    display: block !important;
+}
+
+/* Ensure proper form interaction */
+form * {
+    pointer-events: auto !important;
+}
+
+/* Remove any potential overlay elements */
+.overlay, .modal-backdrop, .backdrop {
+    display: none !important;
+}
+
+/* Ensure proper stacking for form elements */
+.mb-4, .mb-6 {
+    position: relative;
+    z-index: 30;
+}
+
+/* Fix any potential Alpine.js conflicts */
+[x-cloak] {
+    display: none !important;
+}
+
+/* Ensure proper form field interaction */
+.block.w-full {
+    position: relative;
+    z-index: 35;
+}
+
+/* Fix any potential CSS conflicts with Tailwind */
+.border-gray-300 {
+    border-color: #d1d5db !important;
+}
+
+.rounded-md {
+    border-radius: 0.375rem !important;
+}
+
+.shadow-sm {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Ensure proper focus states */
+.focus\:ring-blue-500:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+.focus\:border-blue-500:focus {
+    border-color: #3b82f6 !important;
+}
+
+/* Debugging: Make any overlays visible */
+.overlay, .modal-backdrop, .backdrop, [class*="overlay"], [class*="backdrop"] {
+    background-color: rgba(255, 0, 0, 0.3) !important;
+    border: 2px solid red !important;
+}
+
+/* Force form elements to be interactive */
+form input, form button, form select, form textarea {
+    position: relative !important;
+    z-index: 999 !important;
+    pointer-events: auto !important;
+    background-color: white !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Ensure form container is properly positioned */
+.w-full.sm\:max-w-md.mt-6.px-6.py-4.bg-white.shadow-md {
+    position: relative !important;
+    z-index: 1000 !important;
+    background-color: white !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Remove any potential CSS that might be hiding elements */
+.hidden, .invisible, .opacity-0 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Force proper form styling */
+input[type="email"], input[type="password"], input[type="text"], input[type="tel"] {
+    background-color: white !important;
+    border: 1px solid #d1d5db !important;
+    color: #374151 !important;
+    cursor: text !important;
+}
+
+/* Ensure labels are visible and clickable */
+label {
+    color: #374151 !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+}
+
+/* Specific button fixes for login/register forms */
+.w-full.inline-flex.justify-center.py-2.px-4.border.border-transparent.rounded-md.shadow-sm.text-sm.font-medium.text-white.bg-blue-600.hover\:bg-blue-700.focus\:outline-none.focus\:ring-2.focus\:ring-offset-2.focus\:ring-blue-500.transition-colors {
+    background-color: #2563eb !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 0.375rem !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    display: block !important;
+    width: 100% !important;
+    margin-top: 1rem !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+/* Ensure submit buttons are always visible */
+button[type="submit"], input[type="submit"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background-color: #2563eb !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 0.375rem !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    width: 100% !important;
+    margin-top: 1rem !important;
+}

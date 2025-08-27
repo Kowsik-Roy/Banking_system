@@ -15,24 +15,48 @@ class TransferController extends Controller
 {
     public function showForm()
     {
-        return view('transactions.transfer');
+        return view('transfer.create');
+    }
+
+    public function init(Request $request)
+    {
+        // Initialize Diffie-Hellman session
+        $dh = new DiffieHellman();
+        
+        return response()->json([
+            'p' => $dh->getPrime(),
+            'serverPublic' => $dh->getPublicKey(),
+            'session_id' => bin2hex(random_bytes(16)),
+            'nonce' => bin2hex(random_bytes(16))
+        ]);
     }
 
     public function transfer(Request $request)
     {
         $request->validate([
-            'phone'   => 'required|exists:users,phone',
+            'receiver_phone'   => 'required|exists:users,phone',
             'amount'  => 'required|numeric|min:1',
             'pin'     => 'required|digits:4',
         ]);
 
         $sender = Auth::user();
-        $receiver = User::where('phone', $request->phone)->first();
+        $receiver = User::where('phone', $request->receiver_phone)->first();
 
         //  Check PIN
         if (!Hash::check($request->pin, $sender->pin)) {
             return back()->with('error', 'Invalid PIN');
         }
+         //check sender ba;ance 
+         if ($sender->balance <$request->amount){
+            return back()->with('error','Insufficient balance!');
+        }
+        //deduct from sender
+        $sender->balance -= $request->amount;
+        $sender->save();
+
+        //add top reciever
+        $receiver->balance += $request->amount;
+        $receiver->save();      
 
         // Diffie–Hellman Key Exchange
         $alice = new DiffieHellman();
@@ -68,9 +92,10 @@ class TransferController extends Controller
         $lastEntry = LedgerEntry::latest('id')->first();
         $prevHash  = $lastEntry ? $lastEntry->hash : 'GENESIS';
 
-        //  Build debit entry hash
-        $debitString = $transaction->id.$sender->id.'debit'.$request->amount.$prevHash;
+        //  Build debit entry hash - use decimal string format for consistency
+        $debitString = $transaction->id.$sender->id.'debit'.number_format($request->amount, 2).$prevHash;
         $debitHash   = hash('sha256', $debitString);
+
 
         LedgerEntry::create([
             'transaction_id' => $transaction->id,
@@ -81,8 +106,8 @@ class TransferController extends Controller
             'hash'           => $debitHash,
         ]);
 
-        //  Build credit entry hash (chain continues from debit)
-        $creditString = $transaction->id.$receiver->id.'credit'.$request->amount.$debitHash;
+        //  Build credit entry hash (chain continues from debit) - use decimal string format for consistency
+        $creditString = $transaction->id.$receiver->id.'credit'.number_format($request->amount, 2).$debitHash;
         $creditHash   = hash('sha256', $creditString);
 
         LedgerEntry::create([

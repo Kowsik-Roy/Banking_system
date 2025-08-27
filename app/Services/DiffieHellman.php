@@ -24,17 +24,30 @@ class DiffieHellman
 
     public function getPublicKey(): string
     {
-        return $this->publicKey;
+        return dechex((int)$this->publicKey);
     }
 
     public function getSharedSecret(string $otherPublicKey): string
     {
+        // Convert hex to decimal if needed
+        $otherPublicKeyDecimal = ctype_xdigit($otherPublicKey) ? hexdec($otherPublicKey) : $otherPublicKey;
+        
         // shared = (otherPublicKey ^ privateKey) mod prime
-        return $this->modPow($otherPublicKey, $this->privateKey, $this->prime);
+        return $this->modPow($otherPublicKeyDecimal, $this->privateKey, $this->prime);
+    }
+
+    public function getPrime(): string
+    {
+        return $this->prime;
     }
 
     private function modPow(string $base, string $exp, string $mod): string
     {
+        // Ensure all arguments are valid decimal strings
+        $base = (string)intval($base);
+        $exp = (string)intval($exp);
+        $mod = (string)intval($mod);
+        
         $result = "1";
         $base = bcmod($base, $mod);
 

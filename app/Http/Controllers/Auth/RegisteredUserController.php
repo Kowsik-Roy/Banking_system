@@ -36,6 +36,7 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'phone' => 'required|string|max:20|unique:users', 
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'pin' => ['required', 'string', 'size:4', 'regex:/^[0-9]+$/', 'confirmed'],
         ]);
 
         $code = str_pad(rand(10000,99999),6,'0',STR_PAD_LEFT);
@@ -45,6 +46,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'phone' => $request->phone, 
             'password' => Hash::make($request->password),
+            'pin' => Hash::make($request->pin),
             'verification_code'=> $code,
             'is_verified' => false,
         ]);

@@ -12,9 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            if (!Schema::hasColumn('users', 'is_verified')) {
-                $table->boolean('is_verified')->default(false);
-            }
+            $table->decimal('balance', 12, 2)->default(0);
         });
     }
 
@@ -24,9 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            if (Schema::hasColumn('users', 'is_verified')) {
-                $table->dropColumn('is_verified');
-            }
+            $table->dropColumn('balance');
         });
     }
 };

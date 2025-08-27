@@ -24,7 +24,9 @@ class User extends Authenticatable
         'password',
         'verification_code',
         'is_verified',
-        'pin'
+        'pin',
+        'role',
+        'balance'
     ];
 
     /**
@@ -48,5 +50,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function isAdmin()
+    {
+        return $this->role==='admin';
     }
 }
