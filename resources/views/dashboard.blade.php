@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <a href="#" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                        <a href="{{ route('transactions.index') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                             View History
                         </a>
                     </div>
@@ -135,13 +135,54 @@
                     <h3 class="text-lg font-medium text-gray-900">Recent Activity</h3>
                 </div>
                 <div class="p-6">
-                    <div class="text-center text-gray-500 py-8">
-                        <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                        <p class="mt-2 text-sm">No recent transactions</p>
-                        <p class="text-xs">Your transaction history will appear here</p>
-                    </div>
+                    @if($recentTransactions->count() > 0)
+                        <div class="space-y-4">
+                            @foreach($recentTransactions as $transaction)
+                                <div class="flex items-center justify-between p-4 border border-gray-100 rounded-lg hover:bg-gray-50">
+                                    <div class="flex items-center">
+                                        <div class="w-10 h-10 rounded-full flex items-center justify-center {{ $transaction->sender_id === Auth::id() ? 'bg-red-100' : 'bg-green-100' }}">
+                                            @if($transaction->sender_id === Auth::id())
+                                                <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                                </svg>
+                                            @else
+                                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
+                                                </svg>
+                                            @endif
+                                        </div>
+                                        <div class="ml-4">
+                                            <p class="text-sm font-medium text-gray-900">
+                                                @if($transaction->sender_id === Auth::id())
+                                                    Sent to {{ $transaction->receiver->name }}
+                                                @else
+                                                    Received from {{ $transaction->sender->name }}
+                                                @endif
+                                            </p>
+                                            <p class="text-sm text-gray-500">{{ $transaction->created_at->format('M d, Y H:i') }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium text-gray-900">${{ number_format($transaction->amount, 2) }}</p>
+                                        <a href="{{ route('transactions.show', $transaction->id) }}" class="text-xs text-blue-600 hover:text-blue-900">View Details</a>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="mt-6 text-center">
+                            <a href="{{ route('transactions.index') }}" class="text-sm text-blue-600 hover:text-blue-900 font-medium">
+                                View All Transactions →
+                            </a>
+                        </div>
+                    @else
+                        <div class="text-center text-gray-500 py-8">
+                            <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <p class="mt-2 text-sm">No recent transactions</p>
+                            <p class="text-xs">Your transaction history will appear here once you make transfers</p>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

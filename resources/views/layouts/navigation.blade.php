@@ -61,8 +61,16 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link href="{{ route('profile.edit') }}" class="text-gray-700 hover:text-blue-600">
-                                {{ __('Profile') }}
+                            <div class="px-4 py-3 border-b border-gray-100">
+                                <p class="text-sm text-gray-500">Signed in as</p>
+                                <p class="text-sm font-medium text-gray-900 truncate">{{ Auth::user()->email }}</p>
+                            </div>
+                            
+                            <x-dropdown-link href="{{ route('profile.edit') }}">
+                                <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                                {{ __('Profile Settings') }}
                             </x-dropdown-link>
 
                             <!-- Authentication -->
@@ -70,9 +78,11 @@
                                 @csrf
                                 <x-dropdown-link href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
-                                    this.closest('form').submit();"
-                                    class="text-gray-700 hover:text-blue-600">
-                                    {{ __('Log Out') }}
+                                    this.closest('form').submit();">
+                                    <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                    </svg>
+                                    {{ __('Sign Out') }}
                                 </x-dropdown-link>
                             </form>
                         </x-slot>

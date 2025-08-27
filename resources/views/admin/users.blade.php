@@ -79,12 +79,12 @@
                                                 </svg>
                                                 Deposit
                                             </a>
-                                            <button onclick="showWithdrawForm({{ $user->id }})" class="inline-flex items-center px-3 py-1 bg-red-600 text-white text-xs rounded-md hover:bg-red-700 transition-colors">
+                                            <a href="{{ route('admin.withdraw.form', $user->id) }}" class="inline-flex items-center px-3 py-1 bg-red-600 text-white text-xs rounded-md hover:bg-red-700 transition-colors">
                                                 <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
                                                 </svg>
                                                 Withdraw
-                                            </button>
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
@@ -96,57 +96,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Withdraw Modal -->
-    <div id="withdrawModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50" style="display: none;">
-        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-lg bg-white">
-            <div class="mt-3">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-medium text-gray-900">Withdraw Money</h3>
-                    <button onclick="hideWithdrawModal()" class="text-gray-400 hover:text-gray-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                </div>
-                <form id="withdrawForm" method="POST">
-                    @csrf
-                    <div class="mb-4">
-                        <label for="amount" class="block text-sm font-medium text-gray-700 mb-2">Amount</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <span class="text-gray-500 sm:text-sm">$</span>
-                            </div>
-                            <input type="number" step="0.01" min="0.01" name="amount" id="amount" required 
-                                   class="pl-7 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                   placeholder="0.00">
-                        </div>
-                    </div>
-                    <div class="flex justify-end space-x-3">
-                        <button type="button" onclick="hideWithdrawModal()" 
-                                class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition-colors">
-                            Cancel
-                        </button>
-                        <button type="submit" 
-                                class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">
-                            Withdraw
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function showWithdrawForm(userId) {
-            document.getElementById('withdrawForm').action = `/admin/withdraw/${userId}`;
-            document.getElementById('withdrawModal').style.display = 'block';
-            document.getElementById('withdrawModal').classList.remove('hidden');
-        }
-
-        function hideWithdrawModal() {
-            document.getElementById('withdrawModal').style.display = 'none';
-            document.getElementById('withdrawModal').classList.add('hidden');
-        }
-    </script>
 </x-app-layout>
