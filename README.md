@@ -1,61 +1,226 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🏦 Laravel Banking System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A secure and modern banking system built with Laravel 12, featuring user authentication, transaction management, admin panel, and advanced security features including Diffie-Hellman key exchange and HMAC verification.
 
-## About Laravel
+## ✨ Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 🔐 Security Features
+- **Multi-factor Authentication**: Email verification and PIN-based security
+- **Diffie-Hellman Key Exchange**: Secure key generation for transaction encryption
+- **HMAC Verification**: Message integrity and authenticity verification
+- **Encrypted Payloads**: Secure transaction data transmission
+- **Session-based Security**: Unique session IDs for each transaction
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 👥 User Management
+- **User Registration & Login**: Complete authentication system
+- **Profile Management**: Update personal information and security settings
+- **PIN Management**: Secure PIN-based transaction authorization
+- **Email Verification**: Two-step verification process
+- **Role-based Access**: Admin and regular user roles
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 💰 Banking Operations
+- **Money Transfers**: Secure peer-to-peer transactions
+- **Balance Management**: Real-time balance tracking
+- **Transaction History**: Complete audit trail of all transactions
+- **Ledger System**: Detailed financial record keeping
+- **Admin Deposits/Withdrawals**: Administrative banking operations
 
-## Learning Laravel
+### 🛠️ Admin Panel
+- **User Management**: View and manage all registered users
+- **Transaction Monitoring**: Oversee all banking transactions
+- **Deposit/Withdrawal Operations**: Administrative banking functions
+- **System Dashboard**: Overview of banking system statistics
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🚀 Technology Stack
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Backend**: Laravel 12 (PHP 8.2+)
+- **Frontend**: Blade Templates with Tailwind CSS
+- **Database**: MySQL/PostgreSQL (via Laravel migrations)
+- **Authentication**: Laravel Breeze
+- **Security**: Custom Diffie-Hellman implementation
+- **Testing**: Pest PHP
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 📋 Prerequisites
 
-## Laravel Sponsors
+Before running this application, make sure you have the following installed:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **PHP** >= 8.2
+- **Composer** >= 2.0
+- **Node.js** >= 16.0
+- **MySQL** or **PostgreSQL**
+- **XAMPP** (for local development)
 
-### Premium Partners
+## 🛠️ Installation
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Kowsik-Roy/Banking_system.git
+cd Banking_system
+```
 
-## Contributing
+### 2. Install Dependencies
+```bash
+composer install
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Environment Setup
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Code of Conduct
+### 4. Configure Database
+Edit your `.env` file with your database credentials:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=banking_system
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 5. Run Migrations
+```bash
+php artisan migrate
+```
 
-## Security Vulnerabilities
+### 6. Build Assets
+```bash
+npm run build
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 7. Start the Application
+```bash
+php artisan serve
+```
 
-## License
+The application will be available at `http://localhost:8000`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 📱 Usage
+
+### For Regular Users
+
+1. **Registration**: Create a new account with email verification
+2. **Set PIN**: Configure a secure PIN for transactions
+3. **Email Verification**: Complete the verification process
+4. **Make Transfers**: Send money to other users securely
+5. **View History**: Check transaction history and balance
+
+### For Administrators
+
+1. **Access Admin Panel**: Navigate to `/admin/dashboard`
+2. **User Management**: View and manage all users
+3. **Banking Operations**: Perform deposits and withdrawals
+4. **System Monitoring**: Oversee transaction activities
+
+## 🔧 Configuration
+
+### Mail Configuration
+Configure your email settings in `.env` for verification emails:
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=your_smtp_host
+MAIL_PORT=587
+MAIL_USERNAME=your_email
+MAIL_PASSWORD=your_password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=your_email
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+### Security Settings
+The application includes several security features that can be configured:
+- PIN requirements and validation
+- Session timeout settings
+- Transaction limits
+- Encryption parameters
+
+## 🧪 Testing
+
+Run the test suite using Pest:
+```bash
+php artisan test
+```
+
+## 📁 Project Structure
+
+```
+Laravel-Banking-System/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Admin/           # Admin controllers
+│   │   │   ├── Auth/            # Authentication controllers
+│   │   │   └── ...              # Other controllers
+│   │   ├── Middleware/          # Custom middleware
+│   │   └── Requests/            # Form requests
+│   ├── Models/                  # Eloquent models
+│   ├── Services/                # Business logic services
+│   └── Mail/                    # Email notifications
+├── database/
+│   ├── migrations/              # Database migrations
+│   ├── seeders/                 # Database seeders
+│   └── factories/               # Model factories
+├── resources/
+│   ├── views/                   # Blade templates
+│   │   ├── admin/              # Admin panel views
+│   │   ├── auth/               # Authentication views
+│   │   └── components/         # Reusable components
+│   ├── css/                    # Stylesheets
+│   └── js/                     # JavaScript files
+└── routes/                     # Application routes
+```
+
+## 🔒 Security Features Explained
+
+### Diffie-Hellman Key Exchange
+- Generates secure shared keys for each transaction
+- Prevents man-in-the-middle attacks
+- Ensures transaction confidentiality
+
+### HMAC Verification
+- Verifies message integrity
+- Prevents tampering with transaction data
+- Ensures transaction authenticity
+
+### Encrypted Payloads
+- All sensitive transaction data is encrypted
+- Uses session-specific encryption keys
+- Protects against data breaches
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👨‍💻 Author
+
+**Kowsik Roy**
+- GitHub: [@Kowsik-Roy](https://github.com/Kowsik-Roy)
+
+## 🙏 Acknowledgments
+
+- Laravel team for the amazing framework
+- Tailwind CSS for the beautiful UI components
+- All contributors and testers
+
+## 📞 Support
+
+If you encounter any issues or have questions, please:
+
+1. Check the [Issues](https://github.com/Kowsik-Roy/Banking_system/issues) page
+2. Create a new issue with detailed information
+3. Contact the maintainer
+
+---
+
+⭐ **Star this repository if you find it helpful!**
