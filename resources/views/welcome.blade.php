@@ -172,7 +172,7 @@
                             <span class="text-sm font-medium text-blue-400">Banking</span>
                         </div>
                     </div>
-                    <p class="text-gray-400">&copy; 2024 Gganbu Banking. All rights reserved.</p>
+                    <p class="text-gray-400">&copy; 2025 Gganbu Banking. All rights reserved or may be not xD.</p>
                 </div>
             </div>
         </footer>
