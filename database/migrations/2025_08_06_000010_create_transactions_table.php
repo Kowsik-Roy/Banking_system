@@ -8,8 +8,8 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sender_id')->constrained('users');
-            $table->foreignId('receiver_id')->constrained('users');
+            $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('receiver_id')->constrained('users')->onDelete('cascade');
             $table->decimal('amount', 12, 2);
             $table->string('status')->default('pending'); // pending|success|failed
             $table->string('session_id');                 // DH session

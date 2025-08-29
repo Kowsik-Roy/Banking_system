@@ -17,7 +17,8 @@
                             </svg>
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium text-red-800">{{ session('error') }}</p>
+                            <h3 class="text-sm font-medium text-red-800">Transaction Failed</h3>
+                            <p class="text-sm text-red-700 mt-1">{{ session('error') }}</p>
                         </div>
                     </div>
                 </div>
@@ -32,7 +33,8 @@
                             </svg>
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
+                            <h3 class="text-sm font-medium text-green-800">Transaction Successful</h3>
+                            <p class="text-sm text-green-700 mt-1">{{ session('success') }}</p>
                         </div>
                     </div>
                 </div>
@@ -69,11 +71,15 @@
                                     id="receiver_phone"
                                     name="receiver_phone" 
                                     type="tel" 
-                                    class="pl-10 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" 
+                                    class="pl-10 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 @error('receiver_phone') border-red-300 focus:ring-red-500 focus:border-red-500 @enderror" 
                                     placeholder="+1234567890"
+                                    value="{{ old('receiver_phone') }}"
                                     required
                                 >
                             </div>
+                            @error('receiver_phone')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                             <p class="mt-1 text-sm text-gray-500">Enter the phone number of the recipient</p>
                         </div>
 
@@ -92,11 +98,15 @@
                                     type="number" 
                                     min="0.01" 
                                     step="0.01" 
-                                    class="pl-7 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" 
+                                    class="pl-7 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 @error('amount') border-red-300 focus:ring-red-500 focus:border-red-500 @enderror" 
                                     placeholder="0.00"
+                                    value="{{ old('amount') }}"
                                     required
                                 >
                             </div>
+                            @error('amount')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                             <p class="mt-1 text-sm text-gray-500">Minimum amount: $0.01</p>
                         </div>
 
@@ -116,11 +126,14 @@
                                     name="pin" 
                                     type="password" 
                                     maxlength="4" 
-                                    class="pl-10 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" 
+                                    class="pl-10 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 @error('pin') border-red-300 focus:ring-red-500 focus:border-red-500 @enderror" 
                                     placeholder="••••"
                                     required
                                 >
                             </div>
+                            @error('pin')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                             <p class="mt-1 text-sm text-gray-500">Enter your 4-digit security PIN</p>
                         </div>
 

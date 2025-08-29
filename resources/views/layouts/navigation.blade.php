@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-3">
+                    <a href="{{ Auth::user()->role === 'admin' ? route('admin.dashboard') : route('dashboard') }}" class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
@@ -20,16 +20,16 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" class="text-gray-700 hover:text-blue-600">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                    
                     @if(Auth::user()->role === 'admin')
                         <x-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')" class="text-gray-700 hover:text-blue-600">
-                            {{ __('Admin Panel') }}
+                            {{ __('Admin Dashboard') }}
                         </x-nav-link>
                         <x-nav-link href="{{ route('admin.users') }}" :active="request()->routeIs('admin.users')" class="text-gray-700 hover:text-blue-600">
                             {{ __('Manage Users') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" class="text-gray-700 hover:text-blue-600">
+                            {{ __('Dashboard') }}
                         </x-nav-link>
                     @endif
                     
@@ -105,16 +105,16 @@
     <!-- Responsive Navigation Menu -->
     <div x-show="open" x-cloak class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" class="text-gray-700 hover:text-blue-600">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-            
             @if(Auth::user()->role === 'admin')
                 <x-responsive-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')" class="text-gray-700 hover:text-blue-600">
-                    {{ __('Admin Panel') }}
+                    {{ __('Admin Dashboard') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link href="{{ route('admin.users') }}" :active="request()->routeIs('admin.users')" class="text-gray-700 hover:text-blue-600">
                     {{ __('Manage Users') }}
+                </x-responsive-nav-link>
+            @else
+                <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" class="text-gray-700 hover:text-blue-600">
+                    {{ __('Dashboard') }}
                 </x-responsive-nav-link>
             @endif
             

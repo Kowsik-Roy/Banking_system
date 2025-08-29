@@ -20,9 +20,8 @@ class AdminController extends Controller
         }
 
         $totalUsers = User::where('role', '!=', 'admin')->count();
-        $totalBalance = User::where('role', '!=', 'admin')->sum('balance');
         
-        return view('admin.dashboard', compact('totalUsers', 'totalBalance'));
+        return view('admin.dashboard', compact('totalUsers'));
     }
 
     // Show all users

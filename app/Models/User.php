@@ -51,8 +51,57 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
     public function isAdmin()
     {
         return $this->role==='admin';
+    }
+
+    /**
+     * Get transactions where this user is the sender
+     */
+    public function sentTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'sender_id');
+    }
+
+    /**
+     * Get transactions where this user is the receiver
+     */
+    public function receivedTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'receiver_id');
+    }
+
+    /**
+     * Get all transactions for this user (both sent and received)
+     */
+    public function transactions()
+    {
+        return $this->sentTransactions()->union($this->receivedTransactions());
+    }
+
+    /**
+     * Get ledger entries for this user
+     */
+    public function ledgerEntries()
+    {
+        return $this->hasMany(LedgerEntry::class);
+    }
+
+    /**
+     * Get conversations for this user
+     */
+    public function conversations()
+    {
+        return $this->hasMany(Conversation::class);
+    }
+
+    /**
+     * Get messages sent by this user
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
     }
 }

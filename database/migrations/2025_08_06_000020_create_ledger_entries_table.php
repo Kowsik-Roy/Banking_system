@@ -8,8 +8,8 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('ledger_entries', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaction_id')->constrained('transactions');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('transaction_id')->constrained('transactions')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->enum('entry_type', ['debit','credit']);
             $table->decimal('amount', 12, 2);
             $table->string('prev_hash')->nullable();   // for tamper detection (hash chain)

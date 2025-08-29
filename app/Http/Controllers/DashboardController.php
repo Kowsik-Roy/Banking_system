@@ -12,6 +12,11 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         
+        // Redirect admin users to admin dashboard
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+        
         // Get recent transactions for the user
         $recentTransactions = Transaction::where('sender_id', $user->id)
             ->orWhere('receiver_id', $user->id)

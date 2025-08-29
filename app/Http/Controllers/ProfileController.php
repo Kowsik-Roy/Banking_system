@@ -6,8 +6,8 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -39,30 +39,6 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's PIN.
-     */
-    public function updatePin(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'current_pin' => ['required', 'string', 'size:4', 'regex:/^[0-9]+$/'],
-            'new_pin' => ['required', 'string', 'size:4', 'regex:/^[0-9]+$/', 'confirmed'],
-        ]);
-
-        $user = $request->user();
-
-        // Check if current PIN is correct
-        if (!Hash::check($request->current_pin, $user->pin)) {
-            return back()->withErrors(['current_pin' => 'The current PIN is incorrect.']);
-        }
-
-        // Update the PIN
-        $user->pin = Hash::make($request->new_pin);
-        $user->save();
-
-        return Redirect::route('profile.edit')->with('status', 'pin-updated');
-    }
-
-    /**
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse
@@ -73,13 +49,31 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
-        Auth::logout();
+        try {
+            // Use database transaction to ensure data consistency
+            DB::transaction(function () use ($user) {
+                // Delete related records in the correct order
+                // Messages will be deleted automatically due to cascade
+                // Ledger entries will be deleted automatically due to cascade
+                // Transactions will be deleted automatically due to cascade
+                // Conversations will be deleted automatically due to cascade
+                
+                // Finally delete the user
+                $user->delete();
+            });
 
-        $user->delete();
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+            return Redirect::to('verify-email')->with('status', 'account-deleted');
 
-        return Redirect::to('verify-email');
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            \Log::error('Failed to delete user account: ' . $e->getMessage());
+            
+            return Redirect::route('profile.edit')
+                ->withErrors(['userDeletion' => 'Failed to delete account. Please try again or contact support.'], 'userDeletion');
+        }
     }
 }
