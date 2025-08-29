@@ -31,11 +31,11 @@
                         <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" class="text-gray-700 hover:text-blue-600">
                             {{ __('Dashboard') }}
                         </x-nav-link>
+                        
+                        <x-nav-link href="{{ route('transfer.create') }}" :active="request()->routeIs('transfer.*')" class="text-gray-700 hover:text-blue-600">
+                            {{ __('Transfer') }}
+                        </x-nav-link>
                     @endif
-                    
-                    <x-nav-link href="{{ route('transfer.create') }}" :active="request()->routeIs('transfer.*')" class="text-gray-700 hover:text-blue-600">
-                        {{ __('Transfer') }}
-                    </x-nav-link>
                 </div>
             </div>
 
@@ -116,11 +116,11 @@
                 <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" class="text-gray-700 hover:text-blue-600">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
+                
+                <x-responsive-nav-link href="{{ route('transfer.create') }}" :active="request()->routeIs('transfer.*')" class="text-gray-700 hover:text-blue-600">
+                    {{ __('Transfer') }}
+                </x-responsive-nav-link>
             @endif
-            
-            <x-responsive-nav-link href="{{ route('transfer.create') }}" :active="request()->routeIs('transfer.*')" class="text-gray-700 hover:text-blue-600">
-                {{ __('Transfer') }}
-            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

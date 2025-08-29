@@ -109,6 +109,7 @@ class TransferController extends Controller
                     'hmac' => hash_hmac('sha256', $encryptedPayload, $sharedSecret),
                     'shared_key' => $sharedSecret, // store for demo (normally not stored!)
                     'encrypted_payload' => $encryptedPayload,
+                    'status' => 'completed'
                 ]);
 
                 // Store Ledger Entries (double entry bookkeeping)
